@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from lxml import html
 import fileinput
 
 def selfcontain(html_string):
@@ -13,8 +14,8 @@ def selfcontain(html_string):
         HTML text, possibly with links to JavaScript, CSS, and images
         that would require HTTP calls for rendering
     """
-    html_string = ""
-    return html_string
+    tree = html.fromstring(html_string)
+    return html.tostring(tree)
 
 def main():
     html_string = "".join([line for line in fileinput.input()])
