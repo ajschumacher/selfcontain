@@ -15,6 +15,9 @@ def selfcontain(html_string):
         that would require HTTP calls for rendering
     """
     tree = html.fromstring(html_string)
+    scripts = tree.findall('.//script')
+    links = tree.findall('.//link')
+    imgs = tree.findall('.//img')
     return html.tostring(tree)
 
 def main():
