@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import fileinput
+
 def selfcontain(html_string):
     """Make HTML self-contained
 
@@ -13,3 +15,10 @@ def selfcontain(html_string):
     """
     html_string = ""
     return html_string
+
+def main():
+    html_string = "".join([line for line in fileinput.input()])
+    print selfcontain(html_string)
+
+if __name__ == '__main__':
+    main()
