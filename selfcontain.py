@@ -31,9 +31,6 @@ def selfcontain(html_string):
     tree = html.fromstring(html_string)
     scripts = [script for script in tree.findall('.//script')
                if 'src' in script.attrib]
-    # TODO:
-    # links = tree.findall('.//link')
-    # imgs = tree.findall('.//img')
     for script in scripts:
         src = script.attrib['src']
         del(script.attrib['src'])
@@ -42,6 +39,17 @@ def selfcontain(html_string):
         # Could go one farther with `mangle_toplevel` too,
         # but this might risk breaking things.
         script.text = minify(contents, mangle=True)
+    links = [link for link in tree.findall('.//link')
+             if 'href' in link.attrib]
+    for link in links:
+        href = link.attrib['href']
+        for key in link.attrib:
+            del(link.attrib[key])
+        link.tag = 'style'
+        contents = _fetch(href)
+        link.text = contents
+    # TODO:
+    # imgs = tree.findall('.//img')
     return html.tostring(tree)
 
 def main():
