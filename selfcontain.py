@@ -2,6 +2,7 @@
 
 from lxml import html
 import requests
+from slimit import minify
 import fileinput
 
 def selfcontain(html_string):
@@ -30,9 +31,9 @@ def selfcontain(html_string):
         # TODO:
         # relative links, file links
         response = requests.get(src)
-        # TODO:
-        # minify
-        script.text = response.text
+        # Could go one farther with `mangle_toplevel` too,
+        # but this might risk breaking things.
+        script.text = minify(response.text, mangle=True)
     return html.tostring(tree)
 
 def main():
