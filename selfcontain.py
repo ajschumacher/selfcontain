@@ -3,6 +3,7 @@
 from lxml import html
 import requests
 from slimit import minify
+from rcssmin import cssmin
 import fileinput
 
 def _fetch(ref):
@@ -47,7 +48,7 @@ def selfcontain(html_string):
             del(link.attrib[key])
         link.tag = 'style'
         contents = _fetch(href)
-        link.text = contents
+        link.text = cssmin(contents)
     # TODO:
     # imgs = tree.findall('.//img')
     return html.tostring(tree)
