@@ -4,11 +4,16 @@ from lxml import html
 import requests
 from slimit import minify
 from rcssmin import cssmin
+from base64 import b64encode
 import fileinput
 
-def _fetch(ref):
+def _fetch(ref, content_type="text"):
     """
     Return the string referenced by a link.
+
+    Parameters:
+    content_type : Default "text" returns unicode;
+        "binary" returns (binary) string
 
     TODO:                     
     relative links, file links
@@ -16,7 +21,12 @@ def _fetch(ref):
     if ref.startswith("//"):
         ref = "http:" + ref
     response = requests.get(ref)
-    return response.text
+    if content_type == "text":
+        return response.text
+    elif content_type == "binary":
+        return response.content
+    else:
+        raise ValueError("Unrecognized value for argument 'content_type'")
 
 def selfcontain(html_string):
     """Make HTML self-contained
@@ -49,8 +59,15 @@ def selfcontain(html_string):
         link.tag = 'style'
         contents = _fetch(href)
         link.text = cssmin(contents)
-    # TODO:
-    # imgs = tree.findall('.//img')
+    imgs = [img for img in tree.findall('.//img')
+            if 'src' in img.attrib]
+    for img in imgs:
+        src = img.attrib['src']
+        image = _fetch(src, content_type="binary")
+        encoded = b64encode(image)
+        extension = src.split(".")[-1]
+        src = "data:image/" + extension + ";base64," + encoded
+        img.attrib['src'] = src
     return html.tostring(tree)
 
 def main():
