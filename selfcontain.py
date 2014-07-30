@@ -5,6 +5,18 @@ import requests
 from slimit import minify
 import fileinput
 
+def _fetch(ref):
+    """
+    Return the string referenced by a link.
+
+    TODO:                     
+    relative links, file links
+    """
+    if ref.startswith("//"):
+        ref = "http:" + ref
+    response = requests.get(ref)
+    return response.text
+
 def selfcontain(html_string):
     """Make HTML self-contained
 
@@ -26,19 +38,18 @@ def selfcontain(html_string):
         src = script.attrib['src']
         del(script.attrib['src'])
         script.attrib['type'] = 'text/javascript'
-        if src.startswith("//"):
-            src = "http:" + src
-        # TODO:
-        # relative links, file links
-        response = requests.get(src)
+        contents = _fetch(src)
         # Could go one farther with `mangle_toplevel` too,
         # but this might risk breaking things.
-        script.text = minify(response.text, mangle=True)
+        script.text = minify(contents, mangle=True)
     return html.tostring(tree)
 
 def main():
-    html_string = "".join([line for line in fileinput.input()])
-    print selfcontain(html_string)
+    string = "".join([line for line in fileinput.input()])
+    # Allow a URL to be passed and fetched
+    if string.startswith("http"):
+        string = _fetch(string.strip())
+    print selfcontain(string)
 
 if __name__ == '__main__':
     main()
