@@ -8,12 +8,11 @@ from base64 import b64encode
 import fileinput
 
 def _fetch(ref, content_type="text"):
-    """
-    Return the string referenced by a link.
+    """Return the thing referenced by a link.
 
     Parameters:
-    content_type : Default "text" returns unicode;
-        "binary" returns (binary) string
+    content_type : Default "text" returns unicode,
+                   "binary" returns (binary) string
 
     TODO:                     
     relative links, file links
