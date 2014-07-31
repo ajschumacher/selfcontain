@@ -32,7 +32,6 @@ def _fetch(ref, base="", content_type="text"):
         base = "http:" + base
     if ref.startswith("//"):
         ref = "http:" + ref
-    print base, ref
     if base.startswith("http") or ref.startswith("http"):
         target = urljoin(base, ref)
         response = requests.get(target)
