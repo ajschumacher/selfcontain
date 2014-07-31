@@ -7,6 +7,11 @@ from rcssmin import cssmin
 from base64 import b64encode
 import fileinput
 
+def _read_file(filename):
+    """Return a string, for a filename"""
+    with open(filename) as f:
+        return f.read()
+
 def _fetch(ref, content_type="text"):
     """Return the thing referenced by a link.
 
