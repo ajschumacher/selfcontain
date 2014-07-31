@@ -43,6 +43,15 @@ def _fetch(ref, base="", content_type="text"):
         target = _pathjoin(base, ref)
         return _read_file(target)
 
+def _image_to_b64(src, base):
+    image = _fetch(src, base, content_type="binary")
+    encoded = b64encode(image)
+    extension = src.split(".")[-1]
+    if extension == "ico":
+        extension = "x-icon"
+    string = "data:image/" + extension + ";base64," + encoded
+    return string
+
 def selfcontain(html_string, base):
     """Make HTML self-contained
 
@@ -83,11 +92,7 @@ def selfcontain(html_string, base):
             if 'src' in img.attrib]
     for img in imgs:
         src = img.attrib['src']
-        image = _fetch(src, base, content_type="binary")
-        encoded = b64encode(image)
-        extension = src.split(".")[-1]
-        src = "data:image/" + extension + ";base64," + encoded
-        img.attrib['src'] = src
+        img.attrib['src'] = _image_to_b64(src, base)
     return html.tostring(tree)
 
 def selfcontain_ref(target):
