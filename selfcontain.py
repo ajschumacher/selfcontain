@@ -71,7 +71,7 @@ def selfcontain(html_string, base):
         script.text = minify(contents, mangle=True)
     links = [link for link in tree.findall('.//link')
              if 'href' in link.attrib and
-                'style' == link.attrib.get('rel')]
+                'stylesheet' == link.attrib.get('rel')]
     for link in links:
         href = link.attrib['href']
         for key in link.attrib:
