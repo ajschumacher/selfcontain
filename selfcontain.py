@@ -88,6 +88,12 @@ def selfcontain(html_string, base):
         link.tag = 'style'
         contents = _fetch(href, base)
         link.text = cssmin(contents)
+    icons = [icon for icon in tree.findall('.//link')
+             if 'href' in icon.attrib and
+             'icon' == icon.attrib.get('rel')]
+    for icon in icons:
+        href = icon.attrib['href']
+        icon.attrib['href'] = _image_to_b64(href, base)
     imgs = [img for img in tree.findall('.//img')
             if 'src' in img.attrib]
     for img in imgs:
