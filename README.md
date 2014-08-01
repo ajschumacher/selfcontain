@@ -26,7 +26,7 @@ main function to know. Command-line usage wraps the minor extension
 URL to fetch and process.
 
 ```bash
-python selfcontain.py test_in.html > test_out.html
+./selfcontain.py test_in.html > test_out.html
 # or
-python selfcontain.py https://raw.githubusercontent.com/ajschumacher/selfcontain/master/test_in.html > test_out.html
+./selfcontain.py https://raw.githubusercontent.com/ajschumacher/selfcontain/master/test_in.html > test_out.html
 ```
