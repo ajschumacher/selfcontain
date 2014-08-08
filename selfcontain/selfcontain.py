@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from urlparse import urljoin
 import os.path
 from lxml import html
@@ -111,13 +109,3 @@ def selfcontain_ref(target):
     """
     string = _fetch(target)
     return selfcontain(string, target)
-
-def main():
-    """
-    selfcontain the HTML referenced by a command-line argument,
-    either online or on local disk
-    """
-    print selfcontain_ref(sys.argv[1])
-
-if __name__ == '__main__':
-    main()

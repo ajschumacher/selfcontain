@@ -9,4 +9,5 @@ setup(name = 'selfcontain',
       url = 'https://github.com/ajschumacher/selfcontain',
       download_url = 'https://github.com/ajschumacher/selfcontain/tarball/0.1',
       version = '0.1',
-      install_requires = ['lxml', 'requests', 'slimit', 'rcssmin'])
+      install_requires = ['lxml', 'requests', 'slimit', 'rcssmin'],
+      scripts = ['bin/selfcontain'])
