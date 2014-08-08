@@ -5,7 +5,6 @@ import requests
 from slimit import minify
 from rcssmin import cssmin
 from base64 import b64encode
-import sys
 
 def _read_file(filename):
     """Return a string, for a filename"""
