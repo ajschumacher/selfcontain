@@ -72,9 +72,7 @@ def selfcontain(html_string, base):
         del(script.attrib['src'])
         script.attrib['type'] = 'text/javascript'
         contents = _fetch(src, base)
-        # Could go one farther with `mangle_toplevel` too,
-        # but this might risk breaking things.
-        script.text = minify(contents, mangle=True)
+        script.text = minify(contents)
     links = [link for link in tree.findall('.//link')
              if 'href' in link.attrib and
                 'stylesheet' == link.attrib.get('rel')]
