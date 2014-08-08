@@ -1,2 +1,3 @@
 *.pyc
-selfcontain.egg-info/
+/*.egg-info
+/dist/
