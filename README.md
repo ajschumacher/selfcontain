@@ -14,8 +14,8 @@ send as an email attachment, or show as a presentation without
 worrying about internet connectivity, for example.
 
 Cases that are *not* straightforward are those that involve loading
-things via JavaScript, `iframe`s, fonts, and things I haven't thought
-of. Pull requests welcome!
+things via JavaScript, `iframe` things, fonts, and things I haven't
+thought of. Pull requests welcome!
 
 
 ### Usage
