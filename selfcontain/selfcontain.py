@@ -2,7 +2,7 @@ from urlparse import urljoin
 import os.path
 from lxml import html
 import requests
-from slimit import minify
+from rjsmin import jsmin
 from rcssmin import cssmin
 from base64 import b64encode
 
@@ -72,7 +72,7 @@ def selfcontain(html_string, base):
         del(script.attrib['src'])
         script.attrib['type'] = 'text/javascript'
         contents = _fetch(src, base)
-        script.text = minify(contents)
+        script.text = jsmin(contents)
     links = [link for link in tree.findall('.//link')
              if 'href' in link.attrib and
                 'stylesheet' == link.attrib.get('rel')]
