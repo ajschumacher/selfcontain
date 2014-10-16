@@ -23,7 +23,7 @@ register the package with PyPI!!
 python setup.py register
 ```
 
-You can either let the registratoin step make it, or you can yourself
+You can either let the registration step make it, or you can yourself
 put your username and password in `~/.pypirc`. Here's a minimal one:
 
 ```
