@@ -9,8 +9,7 @@ import argparse
 from selfcontain import selfcontain_ref
 
 parser = argparse.ArgumentParser()
-parser.add_argument('ref',
-                    help = 'filename or URL of HTML file')
+parser.add_argument('ref', help='filename or URL of HTML file')
 args = parser.parse_args()
 
 print selfcontain_ref(args.ref)

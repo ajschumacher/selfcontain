@@ -6,13 +6,16 @@ from rjsmin import jsmin
 from rcssmin import cssmin
 from base64 import b64encode
 
+
 def _read_file(filename):
     """Return a string, for a filename"""
     with open(filename) as f:
         return f.read()
 
+
 def _pathjoin(base, ref):
     return os.path.join(os.path.dirname(base), ref)
+
 
 def _fetch(ref, base="", content_type="text"):
     """Return the thing referenced by a URL or filepath.
@@ -34,11 +37,12 @@ def _fetch(ref, base="", content_type="text"):
         response = requests.get(target)
         if content_type == "text":
             return response.text
-        else: # (content_type == "binary")
+        else:  # (content_type == "binary")
             return response.content
     else:
         target = _pathjoin(base, ref)
         return _read_file(target)
+
 
 def _image_to_b64(src, base):
     image = _fetch(src, base, content_type="binary")
@@ -48,6 +52,7 @@ def _image_to_b64(src, base):
         extension = "x-icon"
     string = "data:image/" + extension + ";base64," + encoded
     return string
+
 
 def selfcontain(html_string, base):
     """Make HTML self-contained
@@ -95,6 +100,7 @@ def selfcontain(html_string, base):
         src = img.attrib['src']
         img.attrib['src'] = _image_to_b64(src, base)
     return html.tostring(tree)
+
 
 def selfcontain_ref(target):
     """
